@@ -12,9 +12,12 @@ import java.util.Optional;
 @Component
 public class TenantInterceptor implements HandlerInterceptor {
 
+    public static final String TENANT = "x-tenant";
+
+
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
-        Optional.ofNullable(req.getHeader("schema"))
+        Optional.ofNullable(req.getHeader(TENANT))
                 .map(String::toLowerCase)
                 .ifPresent(TenantContext::setCurrentTenant);
         return true;
